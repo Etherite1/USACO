@@ -86,15 +86,19 @@ public class mootube {
 		queue.add(v);
 		while(queue.size() > 0)
 		{
-			for(int adjnode: adj[queue.peek()])
+			int a = queue.peek();
+			for(int adjnode: adj[a])
 			{
-				if(matrix[queue.peek()][adjnode] < k) continue;
+				if(matrix[a][adjnode] < k) continue;
 				if(visited[adjnode] == 1) continue;
+				
 				visited[adjnode] = 1;
 
 				queue.add(adjnode);
-				if(relevances[queue.peek()] < matrix[queue.peek()][adjnode] && relevances[queue.peek()] >= 0) relevances[adjnode] = relevances[queue.peek()];
-				else relevances[adjnode] = matrix[queue.peek()][adjnode];
+				if(relevances[a] < matrix[a][adjnode] && relevances[a] >= 0) 
+					relevances[adjnode] = relevances[a];
+				else 
+					relevances[adjnode] = matrix[a][adjnode];
 			}
 			queue.poll();
 		}

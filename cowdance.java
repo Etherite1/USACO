@@ -1,11 +1,6 @@
 
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.PriorityQueue;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class cowdance {
 	
@@ -18,48 +13,51 @@ public class cowdance {
 		int n = in.nextInt();
 		t = in.nextInt();
 		
-		int num = 0;
+		
+		
 		int[] cows = new int[n];
-		ArrayList<Integer> q = new ArrayList<Integer>();
+		
 		
 		for(int i = 0; i < n; i++)
 		{
 			cows[i] = in.nextInt();
 		}
+
 		
 		for(int k = 1; k <= n; k++)
 		{
-			if(find(cows, k)) 
+			if(find(k, cows)) 
 			{
-				System.out.println(k);
 				out.write(k + "\n");
 				break;
 			}
 		}
-		out.close();
+
+		
 		in.close();
+		out.close();
 		
 	}
 	
-	static boolean find(int[] cows, int k)
+	
+	static boolean find(int k, int[] cows)
 	{
 		PriorityQueue<Integer> q = new PriorityQueue<Integer>();
 		for(int i = 0; i < k; i++)
-			q.add(cows[i]);
+			q.offer(cows[i]);
 		
 		for(int i = k; i < cows.length; i++)
 		{
-			int temp = q.poll();
-			q.add(cows[i] + temp);
+			int a = q.poll();
+			if(a + cows[i] > t) return false;
+			q.offer(a + cows[i]);
 		}
 		
 		int temp = 0;
-		while(q.size() > 0)
-		{
+		
+		while(!q.isEmpty())
 			temp = q.poll();
-		}
 		
 		return temp <= t;
 	}
-
 }
