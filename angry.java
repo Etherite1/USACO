@@ -1,76 +1,66 @@
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.Scanner;
+
+
+
+import java.util.*;
+import java.io.*;
+
 
 public class angry {
 
-	static int n;
-	static int k;
+	static int n, k;
+	static int[] arr;
 	
 	public static void main(String[] args) throws Exception
 	{
-		Scanner in = new Scanner(new File("angry.in"));
-		FileWriter out = new FileWriter(new File("angry.out"));
+		BufferedReader in = new BufferedReader(new FileReader("angry.in"));
+		FileWriter out = new FileWriter("angry.out");
 		
-		n = in.nextInt();
-		k = in.nextInt();
+		String[] s = in.readLine().split(" ");
+		n = Integer.parseInt(s[0]);
+		k = Integer.parseInt(s[1]);
 		
-		int[] bales = new int[n];
-
-		for(int i = 0; i < n; i++) bales[i] = in.nextInt();
-		Arrays.sort(bales);
+		arr = new int[n];
+		for(int i = 0; i < n; i++)
+			arr[i] = Integer.parseInt(in.readLine());
+		Arrays.sort(arr);
 		
-		int abc = find(bales);
+		int l = 0, r = n - 1;
 		
-		out.write(abc + "\n");
-		out.close();
-		in.close();
-
-	}
-	
-	static int find(int[] bales)
-	{
-		boolean[] visited = new boolean[n];
-		int ktemp = 0;
-		for(int r = 1; r < Integer.MAX_VALUE; r++)
+		while(l < r - 1)
 		{
-			try
+			int mid = (l + r) / 2;
+			if(find(mid))
 			{
-				while(true)
-				{
-					int left = findleft(visited);
-					int leftplusr = bales[left] + r;
-					for(int i = left; i < bales.length; i++)
-					{
-						if(bales[i] <= leftplusr + r && bales[i] >= leftplusr - r && !visited[i])
-						{
-							visited[i] = true;
-						}
-						else break;
-					}
-					ktemp++;
-					if(ktemp > k) break;
-				}
-				
+				r = mid;
 			}
-			catch(Exception IndexOutOfBounds) 
-			{
-				if(ktemp <= k) return r;
-			}
-			ktemp = 0;
-			Arrays.fill(visited, false);
+			else l = mid;
 		}
-		
-		return -1;
+		out.write(r + "\n");
+		out.close();
 	}
 	
-	static int findleft(boolean[] visited)
+	static boolean find(int r)
 	{
-		for(int i = 0; i < visited.length; i++)
-			if(!visited[i]) return i;
-		
-		return -1;
+		int curridx = 0;
+		for(int i = 0; i < k; i++)
+		{
+			int idx = curridx;
+			while(true)
+			{
+				if(idx == arr.length) return true;
+				if(arr[idx] - arr[curridx] <= 2 * r) 
+				{
+					idx++;
+				}
+				else 
+				{
+					curridx = idx;
+					break;
+				}
+			}
+		}
+		return false;
 	}
+
 
 }
