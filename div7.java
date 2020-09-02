@@ -1,64 +1,59 @@
 
-import java.io.File;
-import java.io.FileWriter;
-import java.util.Arrays;
-import java.util.Scanner;
 
-public class div7 
-{
+
+import java.util.*;
+import java.io.*;
+
+
+public class div7 {
 
 	public static void main(String[] args) throws Exception
 	{
-		Scanner in = new Scanner(new File("div7.in"));
-		FileWriter out = new FileWriter(new File("div7.out"));
-		int n = in.nextInt();
+		BufferedReader in = new BufferedReader(new FileReader("div7.in"));
+		FileWriter out = new FileWriter("div7.out");
 		
-		long[] psums = new long[n];
-		psums[0] = 0;
-		psums[1] = in.nextInt();
-		for(int i = 2; i < n; i++)
+
+		int n = Integer.parseInt(in.readLine());
+
+		
+		int[] arr = new int[n];
+		for(int i = 0; i < n; i++)
+			arr[i] = Integer.parseInt(in.readLine());
+
+		
+		long[] psums = new long[n + 1];
+		for(int i = 0; i < n; i++)
 		{
-			psums[i] = (psums[i - 1] + in.nextInt());
+			psums[i + 1] = psums[i] + arr[i];
 		}
 		
-		int[] first = new int[7];
-		int[] last = new int[7];
-		
-		boolean[] visited = new boolean[7];
-		
-		for(int i = 0; i < psums.length; i++)
+		long largest = 0;
+		for(int i = 0; i < 6; i++)
 		{
-			int temp = (int) (psums[i] % 7);
-			if(!visited[temp])
+			int first = -1, last = -1;
+			for(int j = 0; j < n + 1; j++)
 			{
-				visited[temp] = true;
-				first[temp] = i;
+				if(psums[j] % 7 == i)
+				{
+					first = j;
+					break;
+				}
 			}
-		}
-		
-		Arrays.fill(visited, false);
-		
-		for(int i = psums.length - 1; i >= 0; i--)
-		{
-			int temp = (int) (psums[i] % 7);
-			if(!visited[temp])
+			for(int j = n; j >= 0; j--)
 			{
-				visited[temp] = true;
-				last[temp] = i;
+				if(psums[j] % 7 == i)
+				{
+					last = j;
+					break;
+				}
 			}
-		}
-		
-		int largest = 0;
-		
-		for(int i = 0; i < 7; i++)
-		{
-			if(last[i] - first[i] > largest) largest = last[i] - first[i];
+			largest = Math.max(last - first, largest);
 		}
 		
 		
+		System.out.println(largest);
 		out.write(largest + "\n");
 		out.close();
-		in.close();
 	}
-	
+
 }
