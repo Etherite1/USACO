@@ -1,91 +1,65 @@
-
-
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.LinkedList;
+import java.io.*;
+import java.util.*;
 
 public class moocast {
 	
-	ArrayList<Integer> cowcount = new ArrayList<Integer>();
-	static int count;
-
+	static int n;
 
 	public static void main(String[] args) throws Exception {
-		String filename = "moocast.in";
-		File file = new File(filename);
-		FileReader myread = new FileReader(file);
-		BufferedReader br = new BufferedReader(myread);
-
-		String filename2 = "moocast.out";
-		File file2 = new File(filename2);
-		FileWriter bw = new FileWriter(file2);
+		BufferedReader br = new BufferedReader(new FileReader("moocast.in"));
+		FileWriter bw = new FileWriter("moocast.out");
 		
-		String s = br.readLine();
-		int n = Integer.valueOf(s);
+		n = Integer.valueOf(br.readLine());
+		
 		int[][] cows = new int[n][3];
-		
-		int[] visited = new int[n];
-		Arrays.fill(visited, 0);
-		
-		LinkedList<Integer> edges[] = new LinkedList[n];
-		for(int i = 0; i < edges.length; i++) 
+		for(int i = 0; i < n; i++)
 		{
-			edges[i] = new LinkedList<Integer>();
+			String[] s = br.readLine().split(" ");
+			cows[i][0] = Integer.valueOf(s[0]);
+			cows[i][1] = Integer.valueOf(s[1]);
+			cows[i][2] = Integer.valueOf(s[2]);
 		}
-		
-		for(int i = 0; i < n; i++) {
-			s = br.readLine();
-			String[] a = s.split(" ");
-			cows[i][0] = Integer.valueOf(a[0]);
-			cows[i][1] = Integer.valueOf(a[1]);
-			cows[i][2] = Integer.valueOf(a[2]);
-			edges[i] = new LinkedList<Integer>();
-		}
-		
-		for(int i = 0; i < cows.length; i++)
+		LinkedList<Integer>[] edges = new LinkedList[n];
+		for(int i = 0; i < n; i++) edges[i] = new LinkedList<>();
+		for(int i = 0; i < n; i++)
 		{
-			int[] cow1 = cows[i];
-			for(int j = 0; j < cows.length; j++)
+			for(int j = 0; j < n; j++)
 			{
-				int[] cow2 = cows[j];
-				if(within(cow1, cow2)) 
-				{
-					edges[i].add(j);
-				}
+				if(within(cows[i], cows[j])) edges[i].add(j);
 			}
 		}
-
-		System.out.println();
-		int max = 0;
 		
-		for(int i = 0; i < cows.length; i++)
-		{
-			int current = dfs(edges, i, visited);
-			if(current > max) max = current;
-			Arrays.fill(visited, 0);
-			count = 0;
-		}
-		
-		bw.write(max + "\n");
+		bw.write(bfs(edges) + "\n");
 		bw.close();
 		br.close();
 		
 	}
 	
-	public static int dfs(LinkedList<Integer>[] adj, int start, int[] visited)
+	static int bfs(LinkedList<Integer>[] edges)
 	{
-		for(int adjnode : adj[start]) 
+		int max = 0;
+		for(int i = 0; i < n; i++)
 		{
-			if(visited[adjnode] == 1) continue;
-			visited[adjnode] = 1;
-			count++;
-    		dfs(adj, adjnode, visited);
+			Queue<Integer> q = new LinkedList<>();
+			boolean[] visited = new boolean[n];
+			visited[i] = true;
+			q.add(i);
+			int count = 0;
+			while(!q.isEmpty())
+			{
+				int curr = q.poll();
+				count++;
+				for(int adjnode : edges[curr])
+				{
+					if(visited[adjnode]) continue;
+					visited[adjnode] = true;
+					q.add(adjnode);
+				}
+			}
+			max = Math.max(max, count);
 		}
-		return count;
+		
+		return max;
 	}
 	
 	public static boolean within(int[] cow1, int[] cow2) {
