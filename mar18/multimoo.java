@@ -9,7 +9,7 @@ public class multimoo
 	static LinkedList<int[]> edges[][];
 	public static void main(String[] args) throws Exception
 	{
-		BufferedReader in = new BufferedReader(new FileReader("C:\\temp\\multimoo.in"));
+		BufferedReader in = new BufferedReader(new FileReader("multimoo.in"));
 		FileWriter out = new FileWriter("multimoo.out");
 		
 		n = Integer.parseInt(in.readLine());
@@ -43,7 +43,7 @@ public class multimoo
 		System.out.println(part1);
 		
 		int[][] unique = genunique();
-		LinkedList<Integer>[] cadj = compress(unique); // compressed graph
+		HashSet<Integer>[] cadj = compress(unique); // compressed graph
 		int part2 = teams(cadj);
 		
 		System.out.println(part2);
@@ -53,44 +53,54 @@ public class multimoo
 		
 	}
 	
-	static int teams(LinkedList<Integer>[] adj) // O(n^3 * (n + m)) yikes.......
+	static int teams(HashSet<Integer>[] adj) // O(n^3 * (n + m)) yikes.......
 	{
 		int maxsize = 0;
 		Queue<Integer> q = new LinkedList<>();
+		
+		HashMap<Long, HashSet<Integer>> sets = new HashMap<>();
 
 		for(int i = 0; i < id; i++) 
 		{
 			for(int edge : adj[i])
 			{
 				if(label[i] == label[edge]) continue;
+				HashSet<Integer> visited = new HashSet<>();
+				if(sets.containsKey((long) label[i] * id + label[edge])) 
+				{
+					if(sets.get((long) label[i] * id + label[edge]).contains(i)) continue;
+					else visited = sets.get((long) label[i] * id + label[edge]);
+				}
 				/* for every pair of unique ids, perform bfs on each pair
 				 * bfs: check if adjnode is one of the two labels (non unique grid), if it is then add to queue and increase sum by size of id
 				 * if not break
 				 * label array : id -> player number in non unique grid
 				 */
 				
-				boolean[] visited = new boolean[id];
+				
 				int tempsize = 0;
 
 				q.add(i);
 				tempsize += sizes[i];
-				visited[i] = true;
+				visited.add(i);
 				while(!q.isEmpty())
 				{
 					int curr = q.poll();
 					for(int adjnode : adj[curr])
 					{
-						if(visited[adjnode]) continue;
+						if(visited.contains(adjnode)) continue;
 						if(label[i] == label[adjnode] || label[edge] == label[adjnode]) 
 						{
 							q.add(adjnode);
 							tempsize += sizes[adjnode];
-							visited[adjnode] = true;
+							visited.add(adjnode);
 						}
 					}
 				}
 
 				maxsize = Math.max(maxsize, tempsize);
+				sets.put((long) label[i] * id + label[edge], visited);
+				sets.put((long) label[edge] * id + label[i], visited);
 			}
 		}
 		return maxsize;
@@ -98,12 +108,12 @@ public class multimoo
 	
 	static int[] sizes, label;
 	
-	static LinkedList<Integer>[] compress(int[][] unique) // compresses unique id grid into a graph O(n^2)
+	static HashSet<Integer>[] compress(int[][] unique) // compresses unique id grid into a graph O(n^2)
 	{
-		LinkedList<Integer> adj[] = new LinkedList[id];
+		HashSet<Integer> adj[] = new HashSet[id];
 		for(int i = 0; i < adj.length; i++)
 		{
-			adj[i] = new LinkedList<>();
+			adj[i] = new HashSet<>();
 		}
 		sizes = new int[id];
 		label = new int[id];
@@ -117,36 +127,35 @@ public class multimoo
 				sizes[curr]++;
 				if(i - 1 >= 0)
 				{
-					if(!adj[curr].contains(unique[i - 1][j]))
+//					/* if(!adj[curr].contains(unique[i - 1][j])) */
 						adj[curr].add(unique[i - 1][j]);
 				}
 				if(i + 1 < n)
 				{
-					if(!adj[curr].contains(unique[i + 1][j]))
+//					if(!adj[curr].contains(unique[i + 1][j]))
 						adj[curr].add(unique[i + 1][j]);
 				}
 				if(j - 1 >= 0)
 				{
-					if(!adj[curr].contains(unique[i][j - 1])) 
+//					if(!adj[curr].contains(unique[i][j - 1])) 
 						adj[curr].add(unique[i][j - 1]);
 				}
 				if(j + 1 < n)
 				{
-					if(!adj[curr].contains(unique[i][j + 1])) 
+//					if(!adj[curr].contains(unique[i][j + 1])) 
 						adj[curr].add(unique[i][j + 1]);
 				}
 			}
 		}
 		for(int i = 0; i < adj.length; i++)
 		{
-			for(int j = 0; j < adj[i].size(); j++)
-			{
-				if(adj[i].get(j) == i)
-				{
-					adj[i].remove(j);
-					break;
-				}
-			}
+
+			if(adj[i].contains(i)) adj[i].remove(i);
+//				if(adj[i].get(j) == i)
+//				{
+//					adj[i].remove(j);
+//					break;
+//				}
 		}
 		
 		return adj;
