@@ -26,7 +26,34 @@ const int INF = 1e9;
 const int MAXN = 100001;
 
 vector<int> parent(MAXN);
+vector<int> sz(MAXN);
 
+void initialize()
+{
+    for(int i = 0; i < MAXN; i++)
+    {
+        parent[i] = i;
+        sz[i] = 1;
+    }
+}
+
+int find(int x)
+{
+    if(parent[x] == x) return x;
+    else
+    {
+        parent[x] = find(parent[x]);
+        return parent[x];
+    }
+}
+
+void merge(int a, int b)
+{
+    int roota = find(a), rootb = find(b);
+    if(sz[roota] > sz[rootb]) swap(roota, rootb);
+    parent[roota] = rootb;
+    sz[rootb] += sz[roota];
+}
 
 int main()
 {
@@ -38,8 +65,7 @@ int main()
         freopen("file.out","w",stdout);
     }
 
-    int t = 1;
-    //cin >> t;
+    
 
 
 }
