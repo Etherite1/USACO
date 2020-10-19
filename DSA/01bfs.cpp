@@ -1,3 +1,9 @@
+/* 
+0-1 bfs implementation on a grid
+use when the graph is binary weighted to find shortest paths
+proof: http://www.usaco.org/index.php?page=viewproblem2&cpid=191 
+*/
+
 #include <bits/stdc++.h>
  
 using namespace std;
