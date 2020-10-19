@@ -26,52 +26,32 @@ const int INF = 1e9;
 struct dsu
 {
     vector<int> parent, sz;
-
     void init(int n)
     {
-        parent = vector<int>(n + 1);
-        sz = vector<int>(n + 1);
-        for(int i = 0; i < n; i++)
-        {
-            parent[i] = i;
-            sz[i] = 1;
-        }
-    }
-    
+        parent = vector<int>(n + 1), sz = vector<int>(n + 1, 1);
+        for(int i = 0; i < n; i++) parent[i] = i;
+    }  
+
     int find(int x)
     {
         if(parent[x] == x) return x;
-        else
-        {
-            parent[x] = find(parent[x]);
-            return parent[x];
-        }
+        else return parent[x] = find(parent[x]);
     }
 
     void merge(int a, int b)
     {
         int roota = find(a), rootb = find(b);
         if(sz[roota] > sz[rootb]) swap(roota, rootb);
-        parent[roota] = rootb;
-        sz[rootb] += sz[roota];
+        parent[roota] = rootb; sz[rootb] += sz[roota];
     }
-
 };
 
 bool find(vector<pipii> edges, int mid, vi a, int n)
 {
     dsu d; d.init(n);
 
-    for(int i = 0; i < mid; i++) 
-    {
-        d.merge(edges[i].second.first, edges[i].second.second);
-    }
-
-    for(int i = 0; i < n; i++)
-    {
-        if(d.find(a[i]) == d.find(i)) continue;
-        else return 0;
-    }
+    for(int i = 0; i < mid; i++) d.merge(edges[i].second.first, edges[i].second.second);
+    for(int i = 0; i < n; i++) if(d.find(a[i]) != d.find(i)) return 0;
     return 1;
 }
 
@@ -88,8 +68,7 @@ int main()
     int n, m; cin >> n >> m;
 
     vi a(n);
-    for(int i = 0; i < n; i++) cin >> a[i];
-    for(int i = 0; i < n; i++) a[i]--;
+    for(int i = 0; i < n; i++) {cin >> a[i]; a[i]--;}
 
     vector<pipii> edges(m);
     for(int i = 0; i < m; i++)
@@ -99,12 +78,7 @@ int main()
         edges[i] = mp(w, mp(x, y));
     }
 
-    sort(all(edges));
-    reverse(all(edges));
-
-
-    set<int> notsorted;
-    for(int i = 0; i < n; i++) notsorted.insert(i);
+    sort(all(edges)); reverse(all(edges));
 
     int l = 0, r = m;
     while(r - l > 1)
@@ -113,6 +87,5 @@ int main()
         if(find(edges, mid, a, n)) r = mid;
         else l = mid;
     }
-    int ans = (l == m - 1)? -1 : edges[l].first;
     cout << ((l == m - 1)? -1 : edges[l].first) << endl;
 }
