@@ -14,7 +14,7 @@ struct dsu
     void init(int n)
     {
         parent = vector<int>(n + 1), sz = vector<int>(n + 1, 1);
-        for(int i = 0; i < n; i++) parent[i] = i;
+        for(int i = 0; i <= n; i++) parent[i] = i;
     }  
 
     int find(int x)
