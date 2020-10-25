@@ -1,10 +1,12 @@
-
 import java.util.*;
 import java.io.*;
 
 public class mooyomooyo {
 	
 	static int n, k;
+	static int dx[] = {0, 0, 1, -1};
+	static int dy[] = {1, -1, 0, 0};
+	
 	public static void main(String[] args) throws Exception {
 		BufferedReader in = new BufferedReader(new FileReader("mooyomooyo.in"));
 		FileWriter out = new FileWriter("mooyomooyo.out");
@@ -25,8 +27,7 @@ public class mooyomooyo {
 		
 		while(true)
 		{
-			boolean x = ff(grid);
-			if(!x) break;
+			if(!ff(grid)) break;
 			drop(grid);
 		}
 		
@@ -41,25 +42,18 @@ public class mooyomooyo {
 		}
 		out.close();
 		in.close();
-		
-		
 	}
 	
 	static void drop(int[][] grid)
 	{
 		for(int i = n - 1; i >= 0; i--)
-		{
 			for(int j = 0; j < 10; j++)
-			{
 				if(grid[i][j] > 0)
 				{
 					int x = i;
 					while(true)
 					{
-						if(x + 1 >= n)
-						{
-							break;
-						}
+						if(x + 1 >= n) break;
 						else 
 						{
 							if(!(grid[x + 1][j] == 0)) break;
@@ -69,8 +63,6 @@ public class mooyomooyo {
 						}
 					}
 				}
-			}
-		}
 	}
 	
 	static boolean ff(int[][] grid)
@@ -91,85 +83,40 @@ public class mooyomooyo {
 				{
 					int[] curr = q.poll();
 					currcomp.cells.add(curr);
-					if(!(curr[0] - 1 < 0))
-					{
-						if(grid[curr[0]][curr[1]] == grid[curr[0] - 1][curr[1]])
-						{
-							if(!(visited[curr[0] - 1][curr[1]]))
-							{
-								visited[curr[0] - 1][curr[1]] = true;
-								q.add(new int[] {curr[0] - 1, curr[1]});
-							}
-						}
-					}
-					if(!(curr[0] + 1 >= n))
-					{
-						if(grid[curr[0]][curr[1]] == grid[curr[0] + 1][curr[1]])
-						{
-							if(!(visited[curr[0] + 1][curr[1]]))
-							{
-								visited[curr[0] + 1][curr[1]] = true;
-								q.add(new int[] {curr[0] + 1, curr[1]});
-							}
-						}
-					}
-					if(!(curr[1] - 1 < 0))
-					{
-						if(grid[curr[0]][curr[1] - 1] == grid[curr[0]][curr[1]])
-						{
-							if(!(visited[curr[0]][curr[1] - 1])) 
-							{
-								visited[curr[0]][curr[1] - 1] = true;
-								q.add(new int[] {curr[0], curr[1] - 1});
-							}
-							
-						}
-					}
-					if(!(curr[1] + 1 >= 10))
-					{
-						if(grid[curr[0]][curr[1] + 1] == grid[curr[0]][curr[1]])
-						{
-							if(!(visited[curr[0]][curr[1] + 1]))
-							{
-								visited[curr[0]][curr[1] + 1] = true;
-								q.add(new int[] {curr[0], curr[1] + 1});
-							}
-						}
-					}
 					
+					for(int k = 0; k < 4; k++)
+					{
+						int nx = curr[0] + dx[k], ny = curr[1] + dy[k];
+						if(nx < n && nx >= 0 && ny < 10 && ny >= 0)
+						{
+							if(grid[curr[0]][curr[1]] == grid[nx][ny])
+							{
+								if(!visited[nx][ny])
+								{
+									visited[nx][ny] = true;
+									q.add(new int[] {nx, ny});
+								}
+							}
+						}
+					}	
 				}
-				
 				comps.add(currcomp);
-				
 			}
 		}
 		
 		boolean foundone = false;
 		
 		for(comp i : comps)
-		{
 			if(i.cells.size() >= k)
 			{
 				foundone = true;
-				for(int[] j : i.cells)
-				{
-					grid[j[0]][j[1]] = 0;
-				}
+				for(int[] j : i.cells) grid[j[0]][j[1]] = 0;
 			}
-		}
-		
 		return foundone;
-		
 	}
-
-	
+	static class comp
+	{
+		ArrayList<int[]> cells = new ArrayList<int[]>();
+	}
 }
-
-class comp
-{
-	ArrayList<int[]> cells = new ArrayList<int[]>();
-	
-	public comp() {}
-}
-
 
