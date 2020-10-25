@@ -1,4 +1,9 @@
 /*
+
+*******************
+DSU IMPLEMENTATION
+*******************
+
 tests connectivity among pairwise edges in O(a(n)) time
 functions:
 init(n) - initializes dsu with n nodes
@@ -29,8 +34,22 @@ struct dsu
     }
 };
 
+/*
+***************************
+edges comparator (minimum)
+***************************
+*/
+
+bool cmp(pipii a, pipii b)
+{
+    return a.first < b.first;
+}
 
 /*
+********************
+Kruskal's algorithm
+********************
+
 returns sum of minimum spanning tree in O(v^2 * logv^2) time, with v as number of vertices
 a vector of pair<int, pair<int, int>> must be initialized, this represents pair<weight, pair<endpoint, endpoint>>
 also requires a DSU to function (code above)
