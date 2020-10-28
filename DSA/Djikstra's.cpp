@@ -29,7 +29,7 @@ since we are sorting the priorityqueue by weight anyways this will work
 
 */
 
-void dijkstra(vector<pii> adj[], ll n)
+void dijkstra(vector<vector<pii>>, ll n)
 {
     priority_queue<pii, vector<pii>, greater<pii>> pq;
     vector<ll> dist(n, INF);
@@ -41,17 +41,17 @@ void dijkstra(vector<pii> adj[], ll n)
     while(!pq.empty())
     {
         pii top = pq.top(); pq.pop();
-        if(v[top.se]) continue;
-        v[top.se] = true;
+        if(v[top.second]) continue;
+        v[top.second] = true;
     
-        for(int i = 0; i < adj[top.se].size(); i++)
+        for(int i = 0; i < adj[top.second].size(); i++)
         {
-            pii k = adj[top.se][i];
-            if(dist[top.se] + k.fi < dist[k.se])
+            pii k = adj[top.second][i];
+            if(dist[top.second] + k.fi < dist[k.second])
             {
-                dist[k.se] = dist[top.se] + k.fi;
-                parent[k.se] = top.se;
-                pq.push({dist[k.se], k.se});
+                dist[k.second] = dist[top.second] + k.fi;
+                parent[k.second] = top.second;
+                pq.push({dist[k.second], k.second});
             }
         }
  
@@ -85,7 +85,7 @@ int main()
 
     ll n, m;
     cin >> n >> m;
-    vector<pii> adj[n];
+    vector<vector<pii>> adj(n);
     for(int i = 0; i < m; i++)
     {
         ll u, v, w;
