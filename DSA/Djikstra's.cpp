@@ -2,13 +2,6 @@
  
 using namespace std;
 
-#define pb push_back
-#define fi first
-#define se second
-#define ll long long
-#define pii pair<int, int>
-#define INF 1e17
-#define fastio ios_base::sync_with_stdio(false); cin.tie(NULL);
 
 /*main takeaways of djikstra's algorithm implementation:
 
@@ -29,44 +22,44 @@ since we are sorting the priorityqueue by weight anyways this will work
 
 */
 
-void dijkstra(vector<vector<pii>>, ll n)
+void dijkstra(vector<vector<pair<int, int>>>, long long n)
 {
-    priority_queue<pii, vector<pii>, greater<pii>> pq;
-    vector<ll> dist(n, INF);
+    priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
+    vector<long long> dist(n, 1e17);
     dist[0] = 0;
-    vector<ll> parent(n, -1);
+    vector<long long> parent(n, -1);
     pq.push({0, 0});
     vector<bool> v(n);
     
     while(!pq.empty())
     {
-        pii top = pq.top(); pq.pop();
+        pair<int, int> top = pq.top(); pq.pop();
         if(v[top.second]) continue;
         v[top.second] = true;
     
         for(int i = 0; i < adj[top.second].size(); i++)
         {
-            pii k = adj[top.second][i];
-            if(dist[top.second] + k.fi < dist[k.second])
+            pair<int, int> k = adj[top.second][i];
+            if(dist[top.second] + k.first < dist[k.second])
             {
-                dist[k.second] = dist[top.second] + k.fi;
+                dist[k.second] = dist[top.second] + k.first;
                 parent[k.second] = top.second;
                 pq.push({dist[k.second], k.second});
             }
         }
  
     }
-    ll st = n - 1;
-    vector<ll> arr = {n};
+    long long st = n - 1;
+    vector<long long> arr = {n};
     while(parent[st] != -1)
     {
-        arr.pb(parent[st] + 1);
+        arr.push_back(parent[st] + 1);
         st = parent[st];
     }
     if(st == 0)
     {    
         reverse(arr.begin(), arr.end());
-        for(auto i : arr) cout << i << " ";
+        for(long long i : arr) cout << i << " ";
     }
     else cout << "-1" << endl;
     
@@ -81,11 +74,11 @@ or vice versa
 
 int main()
 {
-    fastio
+    ios_base::sync_with_stdio(false); cin.tie(0); cout.tie(0);
 
-    ll n, m;
+    long long n, m;
     cin >> n >> m;
-    vector<vector<pii>> adj(n);
+    vector<vector<pair<int, int>>> adj(n);
     for(int i = 0; i < m; i++)
     {
         ll u, v, w;
