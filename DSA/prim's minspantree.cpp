@@ -1,4 +1,5 @@
 // uses Prim's algorithm to find the minimum spanning tree 
+// with a few modifications, this is verified by http://www.usaco.org/index.php?page=viewproblem2&cpid=415
 
 vector<int> dist(n, 1e9);
 priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>> pq;
