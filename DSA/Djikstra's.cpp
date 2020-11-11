@@ -22,7 +22,7 @@ since we are sorting the priorityqueue by weight anyways this will work
 
 */
 
-void dijkstra(vector<vector<pair<int, int>>>, long long n)
+void dijkstra(vector<vector<pair<int, int>>> adj, long long n)
 {
     priority_queue<pair<int, int>, vector<pair<int, int>>, greater<pair<int, int>>> pq;
     vector<long long> dist(n, 1e17);
