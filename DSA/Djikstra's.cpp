@@ -81,7 +81,7 @@ int main()
     vector<vector<pair<int, int>>> adj(n);
     for(int i = 0; i < m; i++)
     {
-        ll u, v, w;
+        long long  u, v, w;
         cin >> u >> v >> w;
         adj[u - 1].push_back({w, v - 1});
         adj[v - 1].push_back({w, u - 1});
