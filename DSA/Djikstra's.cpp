@@ -17,7 +17,7 @@ while pq is not empty, loop through the popped element's neighbours
 after, to actually obtain the path, we just loop backwards through the parent array from the target element back to original, then reverse
 
 observations:
-i assume that when i have a 2d grid i can just create the graph with pair<int, pair<int, int>>, which stands for pair<weight, pair<destX, destY>>
+i assume that when i have a 2d grid i can just create the graph with pair<int, pair<pii, pii>>, which stands for pair<weight, pair<destX, destY>>
 since we are sorting the priorityqueue by weight anyways this will work
 
 */
