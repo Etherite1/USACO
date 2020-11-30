@@ -40,6 +40,7 @@ void dijkstra(vector<vector<pair<int, int>>> adj, long long n)
         for(int i = 0; i < adj[top.second].size(); i++)
         {
             pair<int, int> k = adj[top.second][i];
+            if(v[k.second]) continue;
             if(dist[top.second] + k.first < dist[k.second])
             {
                 dist[k.second] = dist[top.second] + k.first;
