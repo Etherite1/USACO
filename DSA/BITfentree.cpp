@@ -1,3 +1,7 @@
+// performs range queries and point updates on a binary indexed tree
+// all updates and queries are 1 based indexed
+// verified by SPOJ fentree
+
 struct bit 
 {
     vl tree;
