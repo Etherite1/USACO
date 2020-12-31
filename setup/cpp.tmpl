@@ -13,13 +13,9 @@ using namespace std;
 #define vb vector<bool>
 #define vl vector<long long>
 #define vi vector<int>
-#define fastio ios_base::sync_with_stdio(false); cin.tie(0);
-#define pf push_front
 #define pb push_back
 #define mp make_pair
 #define all(x) (x).begin(),(x).end()
-#define rep(i, begin, end) for(int i = begin; i < end; i++)
-#define brep(i, end, begin) for(int i = end; i > begin; i--)
 #define endl "\n"
 #define rall(x) (x).rbegin(),(x).rend()
 #define watch(x) cout << (#x) << " is " << (x) << endl
@@ -39,10 +35,20 @@ void setIO(string filename)
 	}
 }
 
+ll gcd(ll a, ll b)
+{
+    return __gcd(a, b);
+}
+
 template <class T> void printvec(vector<T> a)
 {
     for(T i : a) cout << i << " ";
     cout << endl;
+}
+
+ll aceil(ll num, ll denom)
+{
+    return (num + denom - 1) / denom;
 }
 
 bool cmp()
@@ -57,7 +63,7 @@ void solve()
 
 int main()
 {
-    fastio
+    ios_base::sync_with_stdio(false); cin.tie(0);
 
     int t = 1;
     //cin >> t;
