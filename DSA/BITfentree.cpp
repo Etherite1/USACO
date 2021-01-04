@@ -18,7 +18,7 @@ struct bit
         return sum; 
     }
 
-    ll rsq(int a, int b) // 0 based indexing range query
+    ll rsq(int a, int b) // 0 based indexing range query on [a, b]
     {
         a++; b++;
         return rsq(b) - (a == 1 ? 0 : rsq(a - 1)); 
