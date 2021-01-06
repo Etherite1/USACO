@@ -100,6 +100,43 @@ vector<long long> genprimes(int n)
     return primelist;
 }
 
+//checks if a number is a perfect square
+bool isSquare(long long n)
+{
+    long long x = sqrt(n);
+    return x * x == n;
+}
+
+//checks if a number is a square of a prime
+bool sqprime(long long n)
+{
+    if(!isSquare(n)) return 0;
+    long long x = sqrt(n);
+    return isprime(x);
+}
+
+//computes number of factors of a number
+//requires genprimes, isSquare, sqprime, sieve
+long long factornum(long long n)
+{
+    int ans = 1;
+    for(long long p : primes)
+    {
+        if(p * p * p > n) break;
+        int cnt = 1;
+        while(n % p == 0)
+        {
+            n /= p;
+            cnt++;
+        }
+        ans *= cnt;
+    }
+    if(isprime(n)) ans *= 2;
+    else if(sqprime(n)) ans *= 3;
+    else if(n != 1) ans *= 4;
+    return ans;
+}
+
 //gets all factors of a number
 vector<long long> factors(long long n) 
 {
