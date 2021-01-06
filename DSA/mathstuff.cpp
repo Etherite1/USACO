@@ -14,13 +14,28 @@ includes:
 
 
 // ceil 
-ll aceil(ll num, ll denom)
+long long aceil(long long num, long long denom)
 {
     return (num + denom - 1) / denom;
 }
 
+// binary exponentiation - computes a^b mod m
+
+long long binpow(long long a, long long b, long long m) 
+{
+    a %= m;
+    long long res = 1;
+    while (b > 0) 
+    {
+        if (b & 1)res = res * a % m;
+        a = a * a % m;
+        b >>= 1;
+    }
+    return res;
+}
+
 // greatest common divisor
-ll gcd(ll a, ll b)
+long long gcd(long long a, long long b)
 {
     return __gcd(a, b);
 }
