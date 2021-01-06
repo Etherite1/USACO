@@ -9,6 +9,9 @@ includes:
     sieve of eratosthenes
     prime generation
     factoring a number
+    counting divisors of a number
+    checking whether a number is a perfect square
+    checking whether a number is square of a prime
     obtaining divisors of a number
 */
 
