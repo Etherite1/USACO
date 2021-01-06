@@ -20,6 +20,7 @@ long long aceil(long long num, long long denom)
 }
 
 // binary exponentiation - computes a^b mod m
+// a^(b^c) = binpow(a, binpow(b, c, m - 1), m)
 
 long long binpow(long long a, long long b, long long m) 
 {
