@@ -83,12 +83,7 @@ void sieve(int n)
 { 
 	for(long long i = 0; i <= n; i++) prime[i] = 1;
 	for(long long p = 2; p * p <= n; p++) 
-    { 
-        if(prime[p]) 
-        { 
-            for(long long i = p * p; i <= n; i += p) prime[i] = false; 
-        } 
-	} 
+		if(prime[p]) for(long long i = p * p; i <= n; i += p) prime[i] = false; 
 	prime[1] = prime[0] = 0;
 } 
 	 
