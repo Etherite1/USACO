@@ -77,7 +77,7 @@ bool isprime(long long n)
 	return 1; 
 } 
 
-//runs sieve of erathosthenes
+//runs sieve of eratosthenes
 bitset<15000150> prime; 
 void sieve(int n) 
 { 
