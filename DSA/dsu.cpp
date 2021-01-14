@@ -13,7 +13,7 @@ struct dsu
     vector<int> parent, sz;
     void init(int n)
     {
-        parent = vector<int>(n + 1), sz = vector<int>(n + 1, 1);
+        parent = vector<int>(n + 10), sz = vector<int>(n + 10, 1);
         for(int i = 0; i <= n; i++) parent[i] = i;
     }  
 
