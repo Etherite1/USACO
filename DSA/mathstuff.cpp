@@ -136,6 +136,7 @@ long long factornum(long long n)
 }
 
 //gets all factors of a number
+//requires sieve, genprimes (call genprimes in main)
 vector<long long> factors(long long n) 
 {
     if(!__primes_generated__) 
