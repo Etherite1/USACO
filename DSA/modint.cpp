@@ -1,23 +1,27 @@
 // an integer number that can be used for modular arithmetic, will be modded with every operation
 
-//int MOD = 1e9 + 7
-struct mi {
- 	int v; explicit operator int() const { return v; } 
-	mi() { v = 0; }
-	mi(ll _v):v(_v%MOD) { v += (v<0)*MOD; }
+template<int MD> struct modint {
+	static const int mod = MD;
+	int v; explicit operator int() const { return v; } // explicit -> don't silently convert to int
+	modint() { v = 0; }
+	modint(int _v) { v = (-MD < _v && _v < MD) ? _v : _v % MD; if(v < 0) v += MD; }
+	friend bool operator == (const modint& a, const modint& b) { return a.v == b.v; }
+	friend bool operator != (const modint& a, const modint& b) { return !(a == b); }
+	friend bool operator < (const modint& a, const modint& b) { return a.v < b.v; }
+	friend ostream& operator << (ostream& os, const modint& m) { os << m.v; return os; }
+	friend istream& operator >> (istream& is, modint& m) { int x; is >> x; m.v = x; return is; }
+	modint& operator += (const modint& m) { if((v += m.v) >= MD) v -= MD; return *this; }
+	modint& operator -= (const modint& m) { if((v -= m.v) < 0) v += MD; return *this; }
+	modint& operator *= (const modint& m) { v = v * m.v % MD; return *this; }
+	modint& operator /= (const modint& m) { return (*this) *= inv(m); }
+	friend modint pow(modint a, int p) { modint ans = 1; assert(p >= 0); for(; p; p /= 2, a *= a) if(p & 1) ans *= a; return ans; }
+	friend modint inv(const modint& a) { assert(a.v != 0); return pow(a, MD - 2); }		
+	modint operator - () const { return modint(-v); }
+	modint& operator ++ () { return *this += 1; }
+	modint& operator -- () { return *this -= 1; }
+	friend modint operator + (modint a, const modint& b) { return a += b; }
+	friend modint operator - (modint a, const modint& b) { return a -= b; }
+	friend modint operator * (modint a, const modint& b) { return a *= b; }
+	friend modint operator / (modint a, const modint& b) { return a /= b; }
 };
-mi& operator+=(mi& a, mi b) { 
-	if ((a.v += b.v) >= MOD) a.v -= MOD; 
-	return a; }
-mi& operator-=(mi& a, mi b) { 
-	if ((a.v -= b.v) < 0) a.v += MOD; 
-	return a; }
-mi operator+(mi a, mi b) { return a += b; }
-mi operator-(mi a, mi b) { return a -= b; }
-mi operator*(mi a, mi b) { return mi((ll)a.v*b.v); }
-mi& operator*=(mi& a, mi b) { return a = a*b; }
-mi pow(mi a, ll p) { assert(p >= 0); // asserts are important! 
-	return p==0?1:pow(a*a,p/2)*(p&1?a:1); }
-mi inv(mi a) { assert(a.v != 0); return pow(a,MOD-2); }
-mi operator/(mi a, mi b) { return a*inv(b); }
-/// mi a = MOD+5; ps((int)inv(a));
+using mint = modint<MOD>;
