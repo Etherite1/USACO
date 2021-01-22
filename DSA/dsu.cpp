@@ -26,6 +26,7 @@ struct dsu
     void merge(int a, int b)
     {
         int roota = find(a), rootb = find(b);
+        if(roota == rootb) return;
         if(sz[roota] > sz[rootb]) swap(roota, rootb);
         parent[roota] = rootb; sz[rootb] += sz[roota];
     }
