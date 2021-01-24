@@ -4,12 +4,12 @@
 
 struct bit 
 {
-    vl tree;
-    bit(int n) {tree = vl(n + 5, 0);}
+    vector<long long> tree;
+    bit(int n) {tree = vector<long long>(n + 5, 0);}
 
-    ll rsq(int idx) 
+    long long rsq(int idx) 
     {
-        ll sum = 0; 
+        long long sum = 0; 
         while(idx > 0)
         {
             sum += tree[idx];
@@ -18,7 +18,7 @@ struct bit
         return sum; 
     }
 
-    ll rsq(int a, int b) // 0 based indexing range query on [a, b]
+    long long rsq(int a, int b) // 0 based indexing range query on [a, b]
     {
         a++; b++;
         return rsq(b) - (a == 1 ? 0 : rsq(a - 1)); 
