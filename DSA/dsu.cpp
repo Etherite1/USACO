@@ -30,4 +30,9 @@ struct dsu
         if(sz[roota] > sz[rootb]) swap(roota, rootb);
         parent[roota] = rootb; sz[rootb] += sz[roota];
     }
+    
+    bool same_set(int a, int b)
+    {
+        return find(a) == fimd(b);
+    }
 };
