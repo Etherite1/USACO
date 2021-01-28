@@ -33,6 +33,6 @@ struct dsu
     
     bool same_set(int a, int b)
     {
-        return find(a) == fimd(b);
+        return find(a) == find(b);
     }
 };
