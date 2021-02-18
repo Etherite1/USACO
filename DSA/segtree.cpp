@@ -14,6 +14,12 @@ struct segtree
         for(T i : tree) cout << i << " ";
         cout << endl;
     }
+    
+    void init(int n)
+    {
+        size = n;
+        tree = vector<T>(4 * n);
+    }
 
     void init(vector<T> a)
     {
