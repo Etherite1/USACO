@@ -45,7 +45,7 @@ long long gcd(long long a, long long b)
 }
 
 // least common multiple
-long long lcm(int a, int b)
+long long lcm(long long a, long long b)
 {
     return (a / gcd(a, b)) * b;
 }
