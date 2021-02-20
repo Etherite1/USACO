@@ -2,6 +2,8 @@
 number theory template
 includes: 
     ceil
+    binary exponentiation
+    modular inverse
     gcd
     lcm
     line segment intersection test
@@ -39,6 +41,7 @@ long long binpow(long long a, long long b, long long m = 1e9 + 7)
 }
 
 //computes the modular inverse of a mod m, requires binpow function
+//m must be prime, uses fermat's little theorem
 long long modinv(long long a, long long m = 1e9 + 7)
 {
 	return binpow(a, m - 2, m);
