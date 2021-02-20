@@ -1,3 +1,8 @@
+/* geometry templates
+includes:
+line segment intersection test
+*/
+
 
 // checks whether two line segments intersect
 bool inter(long double p0_x, long double p0_y, long double p1_x, long double p1_y, long double p2_x, long double p2_y, long double p3_x, long double p3_y)
