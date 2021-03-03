@@ -59,4 +59,20 @@ struct segtree
         int mid = (l + r) / 2;
         return comb(query(ql, qr, l, mid, 2 * node + 1), query(ql, qr, mid + 1, r, 2 * node + 2));
     }
+    
+    void update(int idx, T nval) // 0 indexed updating
+    {
+        update(0, 1, size, idx + 1, nval);
+    }
+    void update(int node, int l, int r, int pos, T nval)
+    {
+        if(l == r) tree[node] = nval;
+        else
+        {
+            int mid = (l + r) / 2;
+            if(pos <= mid) update(node * 2 + 1, l, mid, pos, nval);
+            else update(node * 2 + 2, mid + 1, r, pos, nval);
+            tree[node] = comb(tree[node * 2 + 1], tree[node * 2 + 2]);
+        }
+    }
 };
