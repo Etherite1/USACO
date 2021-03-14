@@ -19,7 +19,7 @@ struct custom_hash { // Credits: https://codeforces.com/blog/entry/62393
 		static const uint64_t FIXED_RANDOM = chrono::steady_clock::now().time_since_epoch().count();
 		hash<T> x;
 		hash<H> y;
-		return splitmix64(x(a.f) * 37 + y(a.s) + FIXED_RANDOM);
+		return splitmix64(x(a.first) * 37 + y(a.ssecond) + FIXED_RANDOM);
 	}
 };
 template <class T, class H> using umap = unordered_map<T, H, custom_hash>;
