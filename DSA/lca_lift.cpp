@@ -1,3 +1,6 @@
+// computes lca of two nodes
+// source: cp-algorithms
+
 struct lca_lift
 {
     int n, l, timer;
