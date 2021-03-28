@@ -53,7 +53,6 @@ void setIO(string filename)
 	}
 }
 
-
 vvi grid, cost;
 int n, m, k;
 string s;
@@ -89,7 +88,6 @@ void solve()
     cost = vvi(m, vi(m, 1e5));
     for(int i = 0; i < m; i++) for(int j = 0; j < m; j++) cin >> grid[i][j];
     for(int i = 0; i < m; i++) dijk(i);
-    for(auto i : cost) DBGvec(i);
     vvi dp(n + 1, vi(m, INF));
     vi mn(n + 1, INF);
     mn[0] = 0;
@@ -104,7 +102,7 @@ void solve()
         {
             int chg = dp[i - 1][c] + pref[c][i] - pref[c][i - 1];
             if(i - k >= 0) chg = min(chg, mn[i - k] + pref[c][i] - pref[c][i - k]);
-            dp[i][c] = min(dp[i][c], chg);
+            dp[i][c] = chg;
             mn[i] = min(dp[i][c], mn[i]);
         }
     }
@@ -116,7 +114,7 @@ int main()
     ios_base::sync_with_stdio(false); cin.tie(0);
 
     int t = 1;
-    //cin >> t;
+    // cin >> t;
 
     for(int i = 1; i <= t; i++) solve();
 
