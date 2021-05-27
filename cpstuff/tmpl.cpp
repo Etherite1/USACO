@@ -7,12 +7,11 @@ using namespace std;
 #define pii pair<int, int>
 #define pll pair<long long, long long>
 #define pipii pair<int, pair<int, int>>
+#define plpll pair<long long, pair<long long, long long>>
 #define vvi vector<vector<int>>
 #define vvl vector<vector<long long>>
 #define vii vector<pii>
 #define vll vector<pll>
-#define vvb vector<vector<bool>>
-#define vb vector<bool>
 #define vl vector<long long>
 #define vi vector<int>
 #define pb push_back
@@ -21,6 +20,7 @@ using namespace std;
 #define endl "\n"
 #define rall(x) (x).rbegin(),(x).rend()
 #define rsz resize
+#define sz(a) ((int)(a).size())
 
 #ifdef Etherite_Local
 #define DBG1(x) cerr << (#x) << ": " << (x) << endl;
@@ -29,6 +29,7 @@ using namespace std;
 #define DBG4(a, b, c, d) cerr << (#a) << " " << (#b) << " " << (#c) << " " << (#d) << ": " << a << " " << b << " " << c << " " << d << endl;
 template<class T> void DBGpair(T a, string s = "") {cerr << s << (s == ""? "" : ": ") <<  a.first << ", " << a.second << endl;}
 template <class T> void DBGvec(vector<T> a){for(T i : a) cerr << i << " "; cerr << endl;}
+mt19937 rnd(228);
 #else
 #define DBG1(x)
 #define DBG2(x, y)
@@ -36,6 +37,7 @@ template <class T> void DBGvec(vector<T> a){for(T i : a) cerr << i << " "; cerr 
 #define DBG4(a, b, c, d)
 template<class T> void DBGpair(T a, string s = "") {return;}
 template <class T> void DBGvec(vector<T> &a){}
+mt19937 rnd(chrono::high_resolution_clock::now().time_since_epoch().count());
 #endif
 
 int dx[] = {0, 0, 1, -1};
@@ -46,11 +48,11 @@ const ll INF = 1e9;
 
 void setIO(string filename) 
 {
-	if(fopen((filename + ".in").c_str(), "r"))
-	{
-		freopen((filename + ".in").c_str(), "r", stdin);
-		freopen((filename + ".out").c_str(), "w", stdout);
-	}
+    if(fopen((filename + ".in").c_str(), "r"))
+    {
+        freopen((filename + ".in").c_str(), "r", stdin);
+        freopen((filename + ".out").c_str(), "w", stdout);
+    }
 }
 
 void solve()

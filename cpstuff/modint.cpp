@@ -1,6 +1,6 @@
 template <int MD>
 struct modint {
-	int v; 
+	long long v; 
 
 	explicit operator int() const {
 		return v;
@@ -45,7 +45,7 @@ struct modint {
 		return *this;
 	}
 	modint& operator *= (const modint& m) {
-		v = v * m.v % MD;
+		v = (v * (m.v % MD)) % MD;
 		return *this;
 	}
 	modint& operator /= (const modint& m) {

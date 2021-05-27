@@ -8,7 +8,7 @@ struct lca_lift
     {
         tin[v] = ++timer;
         up[v][0] = p;
-        for(int i = 1; i <= l; ++i) up[v][i] = up[up[v][i-1]][i-1];
+        for(int i = 1; i <= l; ++i) up[v][i] = up[up[v][i - 1]][i - 1];
         for(int u : adj[v]) if(u != p) dfs(u, v);
         tout[v] = ++timer;
     }
@@ -23,7 +23,7 @@ struct lca_lift
         return up[u][0];
     }
 
-    void init(int nn, vvi ad) {n = nn; adj = ad;}
+    void init(int nn, vector<vector<int>> ad) {n = nn; adj = ad;}
 
     void preprocess(int root) 
     {
